@@ -25,6 +25,14 @@ class MarvelTest {
 
     @Test
     void getCharacterById() {
+        RestTemplate restTemplateMock = Mockito.mock(RestTemplate.class);
+        Marvel marvel = new Marvel(restTemplateMock);
+        Long characterId = 123L;
+        Respuesta respuesta = marvel.getCharacterById(characterId);
 
+        Mockito.verify(restTemplateMock).getForObject(
+                eq(Constants.BASE_URL + "/" + characterId + "?ts=" + Constants.CODIGO + "&apikey=" + Constants.API_KEY_PUBLIC + "&hash=" + Constants.HASH),
+                eq(Respuesta.class)
+        );
     }
 }
